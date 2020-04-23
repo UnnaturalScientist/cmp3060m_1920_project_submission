@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+
+<!--
+__________________________________________________________________________________________________________
+Brief Description
+__________________________________________________________________________________________________________
+
+The navigation stack is discussed throughout the report in great details.
+For complete referencing of this page, see the navi params references.
+
+-->
+
+<launch>
+
+	<node pkg='move_base' type='move_base' respawn='false' name='move_base' output='screen' clear_params='true'> <!--(NicolasVaras, 2018)-->
+		<param name='controller_frequency' value='10.0' />
+		<param name='controller_patience' value='15.0' />
+		<param name='planner_frequency' value='10.0' />
+		<param name='planner_patience' value='15.0' />
+    <!--(YukiFuruta, 2019), (k-okada, 2019)-->
+
+
+		<rosparam file='$(find cmp3060m_1920_project)/config/navi_params/costmap_common_params.yaml' command='load' ns='global_costmap' />
+		<rosparam file='$(find cmp3060m_1920_project)/config/navi_params/global_costmap_params.yaml' command='load' />
+
+		<rosparam file='$(find cmp3060m_1920_project)/config/navi_params/costmap_common_params.yaml' command='load' ns='local_costmap' />
+		<rosparam file='$(find cmp3060m_1920_project)/config/navi_params/local_costmap_params.yaml' command='load' />
+
+		<rosparam file='$(find cmp3060m_1920_project)/config/navi_params/costmap_common_params.yaml' command='load' />
+
+		<rosparam file='$(find cmp3060m_1920_project)/config/navi_params/base_local_planner_params.yaml' command='load' />
+    <!--(NicolasVaras, 2018), (ChristophRoesmann, 2020)-->
+    
+		<remap from="cmd_vel" to="/move_base_cmd_vel"/>
+	</node>
+
+	<include file="$(find cmp3060m_1920_project)/launch/study_cX_nav_source.launch"/>
+
+</launch>
+
+<!--
+__________________________________________________________________________________________________
+References
+__________________________________________________________________________________________________
+
+ChristophRoesmann (2020) nav_core. ROS Wiki. Open Robotics. Available from
+http://wiki.ros.org/nav_core [accessed 15 April 2020].
+
+NicolasVaras (2018) move_base. ROS Wiki. Open Robotics. Available from
+http://wiki.ros.org/move_base [accessed 15 April 2020].
+
+NicolasVaras (2019) base_local_planner. ROS Wiki. Open Robotics. Available from
+http://wiki.ros.org/base_local_planner [accessed 15 April 2020].
+
+ChristophRoesmann (2020) nav_core. ROS Wiki. Open Robotics. Available from
+http://wiki.ros.org/nav_core [accessed 18 April 2020].
+
+NickLamprianidis (2018) costmap_2d. ROS Wiki. Open Robotics. Available from
+http://wiki.ros.org/costmap_2d [accessed 18 April 2020].
+
+YukiFuruta (2019) safe_teleop_base. ROS Wiki. Open Robotics. Available from
+http://wiki.ros.org/safe_teleop_base [accessed 18 April 2020].
+
+k-okada (2019) shared_autonomy_manipulation. Github: SharedAutonomyToolkit. Available from
+https://github.com/SharedAutonomyToolkit/shared_autonomy_manipulation [accessed 18 April 2020].
+-->
